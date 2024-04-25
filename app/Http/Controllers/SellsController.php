@@ -17,16 +17,7 @@ class SellsController extends Controller
 //        return view('categories.index', compact('categories'));
         return view('visitorSells');
     }
-    public function users() //users in admin see page 1
-    {
-        $users = User::all();
-//        session()->flush();
-//        return view('categories.index', compact('categories'));
 
-//        dd(Session::get('userID'));
-
-        return view('users', compact('users'));
-    }
 
     public function create(Request $request) //create page for sells
     {
@@ -40,8 +31,14 @@ class SellsController extends Controller
         }
 
         $id = Session::get('userID');
-        $sells = SellModel::where('userID' , $id)->orderBy('created_at', 'desc')->paginate(2);
-        return view('addSells', compact('sells'));
+
+        $q1 = SellModel::where('userID' , $id)->orderBy('created_at', 'desc')->paginate(10);
+        $q2 = SellModel::where('userID' , $id)->get();
+        $sell10 =$q1->sum('fee');
+        $all = $q2->sum('fee');
+        $allBargain = $q2->sum('bargain');
+
+        return view('addSells', compact('q1', 'sell10' , 'all','allBargain'));
     }
     public function addSellAction(Request $request) //create sells
     {

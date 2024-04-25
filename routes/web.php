@@ -35,7 +35,7 @@ Route::get('/sells', [SellsController::class, 'index'])->name('visitSells');
 Route::get('/visitSearch', [SellsController::class, 'search'])->name('visitSearch');
 Route::get('/main', [SellsController::class, 'main'])->name('main');
 
-Route::get('/users', [SellsController::class, 'users'])->name('users');
+Route::get('/users/{tel?}', [UserController::class, 'users'])->name('users');
 Route::get('/create', [SellsController::class, 'create'])->name('create');
 Route::post('/addSellAction', [SellsController::class, 'addSellAction'])->name('addSellAction');
 

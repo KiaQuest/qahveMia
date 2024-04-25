@@ -10,25 +10,94 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Qahve Mia (users)</title>
+    <style>
+        .up {
+            margin: 1em;
+        }
+        svg {
+            width: 1em;
+        }
+        .dis {
+            display: inline-block !important;
+        }
+        #s1 {
+            width: 50%;
+        }
+        @media only screen and (max-width: 600px) {
+            .mobile1 {
+                display: none;
+            }
+
+        }
+        .fl {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+        }
+        .go {
+            border-left: none;
+            line-height: 2rem;
+            border-bottom-right-radius: 5px;
+        }
+        .searchInput {
+            display: unset;
+            width: unset;
+            border-right: none;
+            border-top-right-radius: unset;
+            border-bottom-right-radius: unset;
+        }
+        .left {
+            border-radius: revert;
+        }
+    </style>
 </head>
 <body>
 
 
+{{--<div class="container" style="margin: 10% auto">--}}
+
+
+
 <div class="container">
+<div class="fl">
+    <div class="up " style="display: flex;">
+        <span class="">
+            <a href="{{ route('addUser') }}">
+                <button class="left"> Add User </button>
+            </a>
+        </span>
+           
+        <div class="ff" >
+            <a href="{{ route('main') }}">
+                <button type="submit" class="left">Ana menu</button>
+            </a>
+        </div>
 
-    <span>
-        <a href="{{ route('addUser') }}">
-            <button> Add User </button>
-        </a>
-    </span>
+    </div>
 
+
+{{--    <div class="dis">--}}
+{{--        <form action="" method="get" class="dis">--}}
+
+{{--            <input class="form-control dis" type="text" name="search" id="s1">--}}
+{{--            <button type="submit" id="s2">Search</button>--}}
+
+{{--        </form>--}}
+{{--    </div>--}}
+    <div class="dis">
+    <form action="{{ route('users') }}" method="get">
+    <input type="text" name="search" id="" placeholder="Search . . ." class="form-control searchInput"><button type="submit" class="go">Go</button>
+    </form>
+    </div>
+</div>
     <table class="table table-striped" style="text-align: center">
         <thead>
         <tr>
-            <th scope="col">#</th>
+            <th scope="col" class="mobile1">#</th>
             <th scope="col">Name</th>
             <th scope="col">Tel</th>
-            <th scope="col">Address</th>
+            <th scope="col" class="mobile1">Address</th>
             <th scope="col">Date</th>
         </tr>
         </thead>
@@ -36,20 +105,22 @@
 
         @foreach($users as $user)
             <tr>
-                <th scope="row">{{ $loop->iteration }}</th>
+                <th scope="row" class="mobile1">{{ $user->id }}</th>
+{{--                <th scope="row">{{ $loop->iteration }}</th>--}}
                 <td>
                     <a href="{{route('create' , ['id' => $user->id])}}">
                         {{ $user['name'] }}
                     </a>
                 </td>
                 <td>{{ $user['tel'] }}</td>
-                <td>{{ Str::limit($user->address, 35)}} </td>
+                <td class="mobile1">{{ Str::limit($user->address, 35)}} </td>
                 <td>{{ $user['created_at']->todatestring() }} </td>
             </tr>
         @endforeach
 
         </tbody>
     </table>
+    {{ $users->links() }}
 </div>
 
 

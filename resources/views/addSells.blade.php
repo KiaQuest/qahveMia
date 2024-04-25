@@ -18,6 +18,9 @@
         svg {
             width: 1em;
         }
+        body {
+            /*background-color: #f8f9fa;*/
+        }
     </style>
 </head>
 <body>
@@ -76,7 +79,7 @@
         </thead>
         <tbody>
 {{--        4 {{ Session::get('userID')}}3--}}
-        @foreach($sells as $sell)
+        @foreach($q1 as $sell)
             <tr>
                 <th scope="row">{{ $loop->iteration }}</th>
                 <td>
@@ -90,11 +93,21 @@
             </tr>
         @endforeach
 
+        <tr>
+            <td>x</td>
+            <th>{{ number_format($sell10) }}</th>
+            <th>All : {{ number_format($allBargain) }}</th>
+            <td class="mobile1"></td>
+            <th>All : {{ number_format($all) }}</th>
+        </tr>
         </tbody>
-    </table>
 
+    </table>
+    <div class="dw mobile1" style="text-align: right">
+        all : {{ number_format($all) }} , 10 last sold : {{ number_format($sell10) }} , all bargains : {{ number_format($allBargain) }}
+    </div>
     <div class="pagination">
-        {{ $sells->links() }}
+        {{ $q1->links() }}
     </div>
 
 </div>
