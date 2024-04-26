@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -29,8 +30,21 @@ class UserController extends Controller
 //        dd($request->search);
 //        $tel =$request->search;
 //        dd(User::where('tel', 'like', "%'2'%"));
+//        Auth::login('parsa');
+//        $credentials = $request->validate([
+//            'name' => ['required', 'email'],
+//            'password' => ['required'],
+//        ]);
 
+        $credentials = $request->only('admin', 'admin');
 
+        if (Auth::onceBasic('name')) {
+            // Authentication passed...
+            die('d');
+            return redirect()->intended('dashboard');
+        }
+        die('s');
+        Auth::attempt(['name' => 'kia' , 'password' => '123']);
         if ($request->search){
 //            dd('search var');
 

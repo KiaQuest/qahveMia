@@ -35,9 +35,16 @@ Route::get('/sells', [SellsController::class, 'index'])->name('visitSells');
 Route::get('/visitSearch', [SellsController::class, 'search'])->name('visitSearch');
 Route::get('/main', [SellsController::class, 'main'])->name('main');
 
-Route::get('/users/{tel?}', [UserController::class, 'users'])->name('users');
+
 Route::get('/create', [SellsController::class, 'create'])->name('create');
 Route::post('/addSellAction', [SellsController::class, 'addSellAction'])->name('addSellAction');
 
 Route::get('/addUser', [UserController::class, 'addUser'])->name('addUser');
 Route::post('/addUserAction', [UserController::class, 'addUserAction'])->name('addUserAction');
+
+Route::middleware(['basicAuth'])->group(function () {
+    //All the routes are placed in here
+    Route::get('/users/{tel?}', [UserController::class, 'users'])->name('users');
+//    Route::get('/', 'LoginController@index');
+//    Route::get('/home', 'DashboardController@dashboard');
+});
