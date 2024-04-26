@@ -1,6 +1,6 @@
 main page
 
-<a href="{{ route('users') }}">
+<a href="{{ route('login') }}">
     <button> Admin </button>
 </a>
 
