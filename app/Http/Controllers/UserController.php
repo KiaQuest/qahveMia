@@ -31,6 +31,26 @@ class UserController extends Controller
         return redirect()->route('users');
 //        return view('users');
     }
+
+    public function check(Request $request)
+    {
+        $credentials = $request->validate([
+            'name' => ['required'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+//            dd('olde');
+            $request->session()->regenerate();
+
+            return redirect()->route('users');
+//            return redirect()->intended('dashboard');
+
+        }
+//        return redirect()->back()->with('fail', 'User or Pass is Incorrect');
+        return back()->withErrors(['fail' => ['Username or Password is Incorrect']]);
+//        dd('olmade');
+    }
     public function users(Request $request) //users in admin see page 1
     {
 //        dd($request->all());
@@ -51,19 +71,7 @@ class UserController extends Controller
 //        }
 //        die('s');
 //        Auth::attempt(['name' => 'kia' , 'password' => '123']);
-        $credentials = $request->validate([
-            'name' => ['required'],
-            'password' => ['required'],
-        ]);
 
-        if (Auth::attempt($credentials)) {
-            dd('olde');
-            $request->session()->regenerate();
-
-            return redirect()->intended('dashboard');
-
-        }
-        dd('olmade');
 
         if ($request->search){
 //            dd('search var');

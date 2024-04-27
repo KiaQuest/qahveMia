@@ -210,9 +210,9 @@
      <div class="form">
 
       <div class="inputBox">
-          <form action="{{ route('users') }}" method="get">
+          <form action="{{ route('check') }}" method="post">
        <input type="text" required name="name"> <i>Username</i>
-
+@csrf
       </div>
 
       <div class="inputBox">
@@ -232,9 +232,11 @@
 
       </div>
 
-         </form>
+         </form><div style="color: blueviolet;">
+         @if($errors->any())
+             {{ implode('', $errors->all(':message')) }}
+         @endif </div>
      </div>
-
     </div>
 
    </div>
