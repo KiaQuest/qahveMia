@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -34,12 +35,18 @@ class UserController extends Controller
 
     public function check(Request $request)
     {
-        $credentials = $request->validate([
+//        $credentials = $request->validate([
+//            'name' => ['required'],
+//            'password' => ['required'],
+//        ]);
+
+        Validator::make($request->all(), [
             'name' => ['required'],
             'password' => ['required'],
-        ]);
+        ])->validate();
 
-        if (Auth::attempt($credentials)) {
+
+        if (Auth::attempt(['name' => $request->name, 'password' => $request->password, 'rol' => 'admin'])) {
 //            dd('olde');
             $request->session()->regenerate();
 
@@ -50,6 +57,25 @@ class UserController extends Controller
 //        return redirect()->back()->with('fail', 'User or Pass is Incorrect');
         return back()->withErrors(['fail' => ['Username or Password is Incorrect']]);
 //        dd('olmade');
+    }
+
+    public function checkUser(Request $request)
+    {
+        Validator::make($request->all(), [
+            'tel' => ['required'],
+            'password' => ['required'],
+        ])->validate();
+
+        if (Auth::attempt(['tel' => $request->tel, 'password' => $request->password])) {
+//            dd('olde');
+//            $request->session()->regenerate();
+
+            return redirect()->route('visitSells');
+//            return redirect()->intended('dashboard');
+
+        }
+        return back()->withErrors(['fail' => ['Username or Password is Incorrect']]);
+
     }
     public function users(Request $request) //users in admin see page 1
     {
@@ -81,7 +107,7 @@ class UserController extends Controller
         }
 
 //        dd('yoxde');
-        $users = User::paginate(2);
+        $users = User::orderBy('created_at', 'DESC')->paginate(20);
 //        session()->flush();
 //        return view('categories.index', compact('categories'));
 

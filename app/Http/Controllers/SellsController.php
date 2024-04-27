@@ -51,7 +51,7 @@ class SellsController extends Controller
 
     public function search() //visitor search
     {
-        return view('visitorSearch');
+        return view('userLogin');
     }
     public function main() //visitor search
     {

@@ -31,20 +31,27 @@ Route::get('/clearex', function() {
 
 
 
-Route::get('/sells', [SellsController::class, 'index'])->name('visitSells');
 Route::get('/visitSearch', [SellsController::class, 'search'])->name('visitSearch');
 Route::get('/main', [SellsController::class, 'main'])->name('main');
 
-Route::get('/users/{tel?}', [UserController::class, 'users'])->name('users');
-Route::post('/checkLogin', [UserController::class, 'check'])->name('check');
-Route::get('/create', [SellsController::class, 'create'])->name('create');
-Route::post('/addSellAction', [SellsController::class, 'addSellAction'])->name('addSellAction');
+Route::group(['middleware' => 'auth'], function () {
 
-Route::get('/addUser', [UserController::class, 'addUser'])->name('addUser');
-Route::post('/addUserAction', [UserController::class, 'addUserAction'])->name('addUserAction');
+    Route::get('/users/{tel?}', [UserController::class, 'users'])->name('users');
+    Route::get('/create', [SellsController::class, 'create'])->name('create');
+    Route::post('/addSellAction', [SellsController::class, 'addSellAction'])->name('addSellAction');
+
+    Route::get('/addUser', [UserController::class, 'addUser'])->name('addUser');
+    Route::post('/addUserAction', [UserController::class, 'addUserAction'])->name('addUserAction');
+
+    Route::get('/sells', [SellsController::class, 'index'])->name('visitSells');
+
+});
+Route::post('/checkLogin', [UserController::class, 'check'])->name('check');
+Route::post('/checkUserLogin', [UserController::class, 'checkUser'])->name('check.user.login');
 
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
+
 Route::middleware(['basicAuth'])->group(function () {
     //All the routes are placed in here
 
