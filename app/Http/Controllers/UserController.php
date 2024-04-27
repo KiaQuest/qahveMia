@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SellModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,11 +67,20 @@ class UserController extends Controller
             'password' => ['required'],
         ])->validate();
 
-        if (Auth::attempt(['tel' => $request->tel, 'password' => $request->password])) {
+        if (Auth::once(['tel' => $request->tel, 'password' => $request->password])) {
+//            dd(Auth::id());
 //            dd('olde');
 //            $request->session()->regenerate();
 
-            return redirect()->route('visitSells');
+//            SellModel::
+            $q1 = SellModel::where('userID' , Auth::id())->orderBy('created_at', 'desc')->paginate(10);
+            $q2 = SellModel::where('userID' , Auth::id())->get();
+            $sell10 =$q1->sum('fee');
+            $all = $q2->sum('fee');
+            $allBargain = $q2->sum('bargain');
+
+            return view('visitorSells' , compact('q1' , 'q2' , 'allBargain' , 'sell10'));
+//            return redirect()->route('visitSells');
 //            return redirect()->intended('dashboard');
 
         }

@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Session;
 
 class SellsController extends Controller
 {
-    public function index() //visitorSells
-    {
-//        $categories = Category::all();
-//        return view('categories.index', compact('categories'));
-        return view('visitorSells');
-    }
+//    public function index() //visitorSells
+//    {
+////        $categories = Category::all();
+////        return view('categories.index', compact('categories'));
+//        return view('visitorSells');
+//    }
 
 
     public function create(Request $request) //create page for sells

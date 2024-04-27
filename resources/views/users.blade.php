@@ -87,7 +87,7 @@
 {{--    </div>--}}
     <div class="dis">
     <form action="{{ route('users') }}" method="get">
-    <input type="text" name="search" id="" placeholder="Search . . ." class="form-control searchInput"><button type="submit" class="go">Go</button>
+    <input type="text" name="search" id="" placeholder="TELEFON . . ." class="form-control searchInput"><button type="submit" class="go">Go</button>
     </form>
     </div>
 </div>

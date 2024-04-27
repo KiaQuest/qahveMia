@@ -43,12 +43,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/addUser', [UserController::class, 'addUser'])->name('addUser');
     Route::post('/addUserAction', [UserController::class, 'addUserAction'])->name('addUserAction');
 
-    Route::get('/sells', [SellsController::class, 'index'])->name('visitSells');
-
 });
+
+
 Route::post('/checkLogin', [UserController::class, 'check'])->name('check');
 Route::post('/checkUserLogin', [UserController::class, 'checkUser'])->name('check.user.login');
 
+//Route::get('/sells', [SellsController::class, 'index'])->name('visitSells');
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
 
